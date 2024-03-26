@@ -1,0 +1,27 @@
+settings:
+  lang: "ru"
+
+#Группы игроков которых можно скрыть
+disguise-groups:
+  - ''
+
+factions:
+  #id фракции
+  police:
+    #Группа лидера. Обязательно называется leader
+    leader:
+      group: "police-leader"
+      salary-time: 60
+      salary: 60
+    worker:
+      #Группа в luckPerms
+      group: "police-worker"
+      #Время до зарплаты
+      salary-time: 15
+      #Сумма зарплаты
+      salary: 40
+      #следующая группа для повышения в фракции
+      #next: ""
+      #предыдущая группа для понижения в фракции
+      #prev: ""
+

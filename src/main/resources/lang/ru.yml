@@ -1,0 +1,35 @@
+error:
+  not-in-faction: "&cДля использования этой команды вы должны состоять во фракции"
+  faction-not-found: "&cУказанная вами фракция не существует"
+  group-not-found: "&cУказанная вами группа не существует"
+  leave-leader: "&cЛидер не может покинуть свою фракцию"
+  in-faction: "&cУказанный игрок уже состоит во фракции"
+  not-invited: "&cУ вас нет приглашений в фракцию"
+  internal: "&cПроизошла непредвединная ошибка."
+  setrank-leader: "&cВы не можете назначить лидеру другую группу."
+
+buttons:
+  accept: "&aПринять "
+  deny: "&cОтклонить"
+
+help:
+  - "&b==========[ &sGTMFactions &7| &a Help &b]=========="
+  - "&a/faction setLeader &7<faction> <player> - назначить лидера фракции"
+  - "&a/faction setRank &7<faction> <player> - установить группу игрока в фракции"
+  - "&a/faction leave &7- покинуть фракцию"
+  - "&a/faction dismissal &7<player> - уволить игрока из фракции"
+  - "&a/faction open &7- открыть меню управления участниками фракции"
+
+success:
+  setleader:
+    admin: "&aВы назначили {player} лидером фракции {faction}"
+    user: "&a{player} назначил вас лидером фракции {faction}"
+  setrank: "&aВы установили {player} ранк {rank} в фракции {faction}"
+  dismissal:
+    admin: "&aВы выгнали {player} из своей фракции"
+    user: "&aВас выгнал из фракции {player}"
+  invite:
+    admin: "&aВы пригласили игрока {player} в свою фракцию"
+    user: "&a{player} пригласил вас во фракцию {faction}. "
+    accept: "&aВы приняли приглашение во фракцию {faction}"
+  leave: "&aВы покинули фракцию {faction}"
