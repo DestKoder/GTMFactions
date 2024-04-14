@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ru.dest</groupId>
-  <artifactId>GTMFractions</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <artifactId>GTMFactions</artifactId>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>GTMFractions</name>
+  <name>GTMFactions</name>
 
   <properties>
     <java.version>1.8</java.version>

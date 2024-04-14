@@ -22,6 +22,11 @@ public class FactionCommand extends CommandManager<GTMFactions> {
         addSubCommand(new Invite(plugin));
     }
 
+    @Override
+    protected void __default(@NotNull ExecutionData data) {
+        plugin.getLang().getMessage("help").send(data.executor());
+    }
+
     @PlayerOnly
     public void accept(@NotNull ExecutionData data){
         Player p = data.executor();

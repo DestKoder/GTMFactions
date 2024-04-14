@@ -20,7 +20,7 @@ import java.util.List;
 public class SetRank extends FactionSub{
 
     public SetRank(GTMFactions plugin) {
-        super(plugin, "setRank");
+        super(plugin, "setrank");
     }
 
     @Override

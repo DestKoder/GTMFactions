@@ -1,0 +1,16 @@
+title: "&2Вас приглашают во фракцию &3{faction}"
+rows: 1
+
+system:
+  accept: 2
+  deny: 6
+
+items:
+  accept:
+    material: "GREEN_WOOL"
+    name: "&aПринять"
+    slot: 2
+  deny:
+    material: "RED_WOOL"
+    name: "&cОтклонить"
+    slot: 6

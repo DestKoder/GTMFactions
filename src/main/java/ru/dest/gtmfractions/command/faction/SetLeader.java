@@ -17,7 +17,7 @@ import java.util.List;
 public class SetLeader extends FactionSub{
 
     public SetLeader(GTMFactions plugin) {
-        super(plugin, "setLeader");
+        super(plugin, "setleader");
     }
 
     @Override

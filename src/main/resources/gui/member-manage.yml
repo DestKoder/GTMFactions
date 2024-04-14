@@ -1,0 +1,30 @@
+title: "&2Управление персоналом &3{faction}"
+rows: 6
+
+system:
+  next: 42
+  prev: 38
+
+items:
+  next:
+    material: "ARROW"
+    name: "&aСлед. страница"
+    slots: [51]
+  prev:
+    material: "ARROW"
+    name: "&aПред. страница"
+    slots: [47]
+  cover:
+    material: "LIME_STAINED_GLASS_PANE"
+    name: "&e"
+    lore: []
+    slots: [45,46,48,49,50,52]
+  info:
+    material: "PAPER"
+    name: "&aИнформация"
+    lore:
+      - '&r'
+      - '&7Лидер: &a{leader}'
+      - '&7Сотрудников: &a{members}'
+      - '&7'
+

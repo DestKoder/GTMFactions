@@ -8,6 +8,7 @@ import ru.dest.gtmfractions.integration.PermissionsIntegration;
 import ru.dest.gtmfractions.storage.FactionStorage;
 import ru.dest.gtmfractions.storage.UserDataStorage;
 import ru.dest.library.bukkit.BukkitPlugin;
+import ru.dest.library.gui.GUIContainer;
 import ru.dest.library.helpers.AnnotationValidator;
 import ru.dest.library.helpers.ArgumentValidator;
 import ru.dest.library.locale.Lang;
@@ -18,12 +19,18 @@ import java.util.Objects;
 @Getter
 public final class GTMFactions extends BukkitPlugin<GTMFactions> {
 
+    @Getter
+    private static GTMFactions instance;
+
     private Lang lang;
     private FactionStorage factions;
     private UserDataStorage users;
     private Manager manager;
 
     private PermissionsIntegration permissionWorker;
+
+    private GUIContainer guiContainer;
+
     @Override
     public void load() throws IOException {
         File config = new File(getDataFolder(), "config.yml");
@@ -41,6 +48,10 @@ public final class GTMFactions extends BukkitPlugin<GTMFactions> {
         if(!userData.exists()){
             userData.createNewFile();
         }
+
+        File gui = new File(getDataFolder(), "gui");
+        if(!gui.exists())gui.mkdirs();
+        saveIfNotExists("gui/member-manage.yml");
     }
 
     @Override
@@ -48,6 +59,8 @@ public final class GTMFactions extends BukkitPlugin<GTMFactions> {
         this.lang = loadLang(getConfig().getString("settings.lang") + ".yml");
         this.factions = new FactionStorage(this, Objects.requireNonNull(getConfig().getConfigurationSection("factions")));
         this.users = new UserDataStorage(new File(getDataFolder(), "userdata.yml"));
+        guiContainer = new GUIContainer(new File(getDataFolder(), "gui"), logger);
+
 
         this.permissionWorker = PermissionsIntegration.hook(getServer());
 
@@ -66,10 +79,12 @@ public final class GTMFactions extends BukkitPlugin<GTMFactions> {
         });;
 
         registry.register(new FactionCommand(this));
+        instance = this;
     }
 
     @Override
     public void disable() throws Exception {
         users.save();
     }
+
 }

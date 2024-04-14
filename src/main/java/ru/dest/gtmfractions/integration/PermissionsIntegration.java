@@ -1,6 +1,7 @@
 package ru.dest.gtmfractions.integration;
 
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -27,12 +28,12 @@ public class PermissionsIntegration {
         return new PermissionsIntegration(provider.getProvider());
     }
 
-    public void addPlayerToGroup(Player player, String group){
-        permission.playerAddGroup(player, group);
+    public void addPlayerToGroup(OfflinePlayer player, String group){
+        permission.playerAddGroup("world",player, group);
     }
 
-    public void removePlayerFromGroup(Player player,String group){
-        permission.playerRemoveGroup(player, group);
+    public void removePlayerFromGroup(OfflinePlayer player,String group){
+        permission.playerRemoveGroup("world",player, group);
     }
 
     public boolean hasGroup(Player player, @NotNull String group){

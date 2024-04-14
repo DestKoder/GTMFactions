@@ -25,3 +25,29 @@ factions:
       #предыдущая группа для понижения в фракции
       #prev: ""
 
+faction:
+  police:
+    name: "Полиция"
+    lore: []
+    groups:
+      leader:
+        group: "police-leader"
+        salary-time: 60
+        salary: 60
+      worker:
+        group: "police-worker"
+        #Время до зарплаты
+        salary-time: 15
+        #Сумма зарплаты
+        salary: 40
+        #следующая группа для повышения в фракции
+        #next: ""
+        #предыдущая группа для понижения в фракции
+        #prev: ""
+
+member-lore:
+  - '&r'
+  - "&aДолжность: &b{rank}"
+  - '&aВо фракции с: &b{date}'
+  - '&aПоследний раз играл: &b{online}'
+  - '&r'

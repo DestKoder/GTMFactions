@@ -1,11 +1,16 @@
 package ru.dest.gtmfractions;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import ru.dest.gtmfractions.object.Faction;
 import ru.dest.gtmfractions.object.FactionGroup;
 import ru.dest.gtmfractions.storage.UserDataStorage;
+import ru.dest.library.object.Pair;
+import ru.dest.library.object.lang.Message;
+import ru.dest.library.utils.Utils;
 
 public class Manager {
 
@@ -52,10 +57,10 @@ public class Manager {
         sendSetLeaderMessages(player, admin, faction);
     }
 
-    private void sendSetLeaderMessages(Player player, CommandSender admin, String faction){
-        plugin.getLang().getMessage("success.setLeader.admin").format("player", player.getName())
+    private void sendSetLeaderMessages(@NotNull Player player, CommandSender admin, String faction){
+        plugin.getLang().getMessage("success.setleader.admin").format("player", player.getName())
                 .format("faction", faction).send(admin);
-        plugin.getLang().getMessage("success.setLeader.user").format("player", admin.getName())
+        plugin.getLang().getMessage("success.setleader.user").format("player", admin.getName())
                 .format("faction", faction).send(player);
     }
 
@@ -88,7 +93,7 @@ public class Manager {
     }
 
     private void sendSetRankMessages(@NotNull Player player, CommandSender admin, String faction){
-        plugin.getLang().getMessage("success.setRank.admin").format("player", player.getName())
+        plugin.getLang().getMessage("success.setrank.admin").format("player", player.getName())
                 .format("faction", faction).send(admin);
     }
 
@@ -126,6 +131,104 @@ public class Manager {
         plugin.getUsers().add(new UserDataStorage.UserData(f.getId(), group.getId(), player.getUniqueId()));
         plugin.getPermissionWorker().addPlayerToGroup(player, group.getGroup());
         plugin.getLang().getMessage("success.invite.accept").format("faction", f.getId()).send(player);
+    }
+
+    public void promote(UserDataStorage.@NotNull UserData user, Player admin, String reason){
+        Faction f = plugin.getFactions().getFaction(user.getFaction());
+        FactionGroup group = f.getGroup(user.getGroup());
+        OfflinePlayer p = Bukkit.getOfflinePlayer(user.getKey());
+
+        if(group.getNext() == null){
+            plugin.getLang().getMessage("error.max-rank").send(admin);
+            return;
+        }
+
+        FactionGroup next = f.getGroup(group.getNext());
+        plugin.getPermissionWorker().addPlayerToGroup(p, next.getGroup());
+
+        plugin.getUsers().add(new UserDataStorage.UserData(f.getId(), next.getId(), user.getKey()));
+
+        if(p.getPlayer() != null) plugin.getLang().getMessage("promote.user").send(p.getPlayer());
+
+        Message announce = plugin.getLang().getMessage("promote.announce").format(
+                Utils.newList(
+                        new Pair<>("player", p.getName()),
+                        new Pair<>("admin", admin.getName()),
+                        new Pair<>("reason", reason),
+                        new Pair<>("rank", next.getId())
+                )
+        );
+
+        for(UserDataStorage.UserData data : plugin.getUsers().getFactionUsers(f.getId())){
+            OfflinePlayer pl = Bukkit.getOfflinePlayer(data.getKey());
+            if(pl.getPlayer() != null){
+                announce.send(pl.getPlayer());
+            }
+        }
+    }
+
+    public void kick(UserDataStorage.@NotNull UserData user, Player admin, String reason){
+        Faction f = plugin.getFactions().getFaction(user.getFaction());
+
+        OfflinePlayer player = Bukkit.getOfflinePlayer(user.getKey());
+
+        for(FactionGroup group : f.listGroups()){
+            plugin.getPermissionWorker().removePlayerFromGroup(player, group.getGroup());
+            return;
+        }
+        plugin.getUsers().remove(player.getUniqueId());
+
+        if(player.getPlayer() != null) plugin.getLang().getMessage("demote.user").send(player.getPlayer());
+
+        Message announce = plugin.getLang().getMessage("demote.announce").format(
+                Utils.newList(
+                        new Pair<>("player", player.getName()),
+                        new Pair<>("admin", admin.getName()),
+                        new Pair<>("reason", reason)
+                )
+        );
+
+        for(UserDataStorage.UserData data : plugin.getUsers().getFactionUsers(f.getId())){
+            OfflinePlayer pl = Bukkit.getOfflinePlayer(data.getKey());
+            if(pl.getPlayer() != null){
+                announce.send(pl.getPlayer());
+            }
+        }
+    }
+
+
+    public void demote(UserDataStorage.@NotNull UserData user, Player admin, String reason){
+        Faction f = plugin.getFactions().getFaction(user.getFaction());
+        FactionGroup group = f.getGroup(user.getGroup());
+        OfflinePlayer p = Bukkit.getOfflinePlayer(user.getKey());
+
+        if(group.getPrev() == null){
+            kick(user, admin, reason);
+            return;
+        }
+
+        FactionGroup prev = f.getGroup(group.getPrev());
+        plugin.getPermissionWorker().addPlayerToGroup(p, prev.getGroup());
+
+        plugin.getUsers().add(new UserDataStorage.UserData(f.getId(), prev.getId(), user.getKey()));
+
+        if(p.getPlayer() != null) plugin.getLang().getMessage("demote.user").send(p.getPlayer());
+
+        Message announce = plugin.getLang().getMessage("demote.announce").format(
+                Utils.newList(
+                        new Pair<>("player", p.getName()),
+                        new Pair<>("admin", admin.getName()),
+                        new Pair<>("reason", reason),
+                        new Pair<>("rank", prev.getId())
+                )
+        );
+
+        for(UserDataStorage.UserData data : plugin.getUsers().getFactionUsers(f.getId())){
+            OfflinePlayer pl = Bukkit.getOfflinePlayer(data.getKey());
+            if(pl.getPlayer() != null){
+                announce.send(pl.getPlayer());
+            }
+        }
     }
 
 }

@@ -7,6 +7,10 @@ error:
   not-invited: "&cУ вас нет приглашений в фракцию"
   internal: "&cПроизошла непредвединная ошибка."
   setrank-leader: "&cВы не можете назначить лидеру другую группу."
+  max-rank: "&aИгрок уже является самым высокопоставленным сотрудником."
+  min-rank: "&aИгрок занимает самую низкую должность"
+
+member-online: "&aОнлайн."
 
 buttons:
   accept: "&aПринять "
@@ -19,6 +23,20 @@ help:
   - "&a/faction leave &7- покинуть фракцию"
   - "&a/faction dismissal &7<player> - уволить игрока из фракции"
   - "&a/faction open &7- открыть меню управления участниками фракции"
+
+promote:
+  user: "&aВас повысил {admin} до должности {rank} по причине {reason}"
+  announce: "&b{admin} &aповысил &b{player} &aдо &b{rank} &a по причине &b{reason}"
+  question: "&aВведите причину по которой вы хотите повысить {player}. cancel для отмены"
+
+demote:
+  user: "&aВас понизил {admin} до должности {rank} по причине {reason}"
+  announce: "&b{admin} &aпонизил &b{player} &aдо &b{rank} &a по причине &b{reason}"
+  question: "&aВведите причину по которой вы хотиет понизить {player}. cancel для отмены"
+
+kick:
+  user: "&aВы были уволены &b{admin}"
+  announce: "&b{admin} &aуволил &b{player} &aпо причине &b{reason}"
 
 success:
   setleader:
